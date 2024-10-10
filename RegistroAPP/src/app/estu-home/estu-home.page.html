@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">  
+  <br>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bienvenido</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ nombre }}
+    </ion-card-content>
+  </ion-card>
+  <ion-button expand="block" (click)="escanearQR()" class="ion-margin-top">Escanear Código QR</ion-button>
+  <ion-button expand="block" (click)="logout()" class="ion-margin-top">Cerrar Sesión</ion-button>
+</ion-content>

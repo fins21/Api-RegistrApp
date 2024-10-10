@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Página del Profesor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bienvenido, Profesor</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ nombre }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="generarCodigoQR()" class="ion-margin-top">Generar Código QR</ion-button>
+
+  <br>
+  <div *ngIf="qrData" class="qr-container">
+    <qrcode [qrdata]="qrData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+  </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Asistencias Registradas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let asistencia of asistencias">
+          <ion-label>
+            <h2>{{ asistencia.correo }}</h2>
+            <p>{{ asistencia.fechaHora }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block" (click)="logout()" class="ion-margin-top">Cerrar Sesión</ion-button>
+</ion-content>

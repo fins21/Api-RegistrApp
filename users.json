@@ -1,0 +1,14 @@
+[
+  {
+    "nombre": "pablo",
+    "email": "pab.carrascom@duocuc.cl",
+    "password": "Pablo123",
+    "role": "alumno"
+  },
+  {
+    "nombre": "pedro",
+    "email": "pedro@duocuc.cl",
+    "password": "Pedro123",
+    "role": "profesor"
+  }
+]
