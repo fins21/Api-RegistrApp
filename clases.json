@@ -1,0 +1,52 @@
+[
+      {
+        "nombre": "Aplicación Móvil",
+        "secciones": [
+          "001D",
+          "002D",
+          "003D",
+          "001V",
+          "002V"
+        ]
+      },
+      {
+        "nombre": "Arquitectura de Software",
+        "secciones": [
+          "001D",
+          "002D",
+          "003D",
+          "001V",
+          "002V"
+        ]
+      },
+      {
+        "nombre": "Inglés",
+        "secciones": [
+          "001D",
+          "002D",
+          "003D",
+          "001V",
+          "002V"
+        ]
+      },
+      {
+        "nombre": "Matemáticas",
+        "secciones": [
+          "001D",
+          "002D",
+          "003D",
+          "001V",
+          "002V"
+        ]
+      },
+      {
+        "nombre": "Ética",
+        "secciones": [
+          "001D",
+          "002D",
+          "003D",
+          "001V",
+          "002V"
+        ]
+      }
+    ]

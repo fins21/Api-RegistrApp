@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>Página del Estudiante</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">  
@@ -12,6 +13,6 @@
       {{ nombre }}
     </ion-card-content>
   </ion-card>
-  <ion-button expand="block" (click)="escanearQR()" class="ion-margin-top">Escanear Código QR</ion-button>
+  <ion-button expand="block" (click)="escanearQR()" [disabled]="!qrDisponible" class="ion-margin-top">Escanear Código QR</ion-button>
   <ion-button expand="block" (click)="logout()" class="ion-margin-top">Cerrar Sesión</ion-button>
 </ion-content>

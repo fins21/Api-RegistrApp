@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-estu-home',
@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class EstuHomePage implements OnInit {
   nombre: string = '';
   correo: string = '';
+  qrDisponible: boolean = false;
   private apiUrl = 'http://localhost:3000';
 
   constructor(
@@ -21,6 +22,7 @@ export class EstuHomePage implements OnInit {
 
   ngOnInit() {
     this.getCurrentUser();
+    this.verificarQRDisponible();
   }
 
   getCurrentUser() {
@@ -53,35 +55,73 @@ export class EstuHomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  verificarQRDisponible() {
+    this.http.get<boolean>(`${this.apiUrl}/qr-disponible`).subscribe(
+      (disponible) => {
+        this.qrDisponible = disponible;
+      },
+      (error) => {
+        console.error('Error al verificar disponibilidad del QR', error);
+      }
+    );
+  }
+
   async escanearQR() {
     console.log('Escaneando código QR...');
     
-    const fechaHora = new Date().toLocaleString();
+    const fechaHora = new Date().toISOString();
     
-    this.http.post(`${this.apiUrl}/asistencia`, {
-      nombre: this.nombre,
-      correo: this.correo,
-      fechaHora: fechaHora
-    }).subscribe(
-      async () => {
-        const toast = await this.toastController.create({
-          message: 'Asistencia registrada con éxito',
-          duration: 2000,
-          position: 'bottom',
-          color: 'success'
-        });
-        toast.present();
+    this.http.get<{disponible: boolean, qrData: string}>(`${this.apiUrl}/qr-disponible`).subscribe(
+      (response) => {
+        if (response.disponible) {
+          const qrLeido = response.qrData;
+          const [clase, seccion, timestamp, randomString] = qrLeido.split('|');
+
+          this.http.post(`${this.apiUrl}/asistencia`, {
+            nombre: this.nombre,
+            correo: this.correo,
+            fechaHora: fechaHora,
+            clase: clase,
+            seccion: seccion,
+            qrData: qrLeido
+          }).subscribe(
+            async (response: any) => {
+              console.log('Respuesta del servidor:', response);
+              const toast = await this.toastController.create({
+                message: response.message || 'Asistencia registrada con éxito',
+                duration: 2000,
+                position: 'bottom',
+                color: 'success'
+              });
+              toast.present();
+            },
+            async (error: HttpErrorResponse) => {
+              console.error('Error al registrar asistencia', error);
+              let errorMessage = 'Error al registrar asistencia';
+              if (error.error && error.error.message) {
+                errorMessage = error.error.message;
+              }
+              this.mostrarError(errorMessage);
+            }
+          );
+        } else {
+          this.mostrarError('No hay un código QR válido disponible');
+        }
       },
-      async (error) => {
-        console.error('Error al registrar asistencia', error);
-        const toast = await this.toastController.create({
-          message: 'Error al registrar asistencia',
-          duration: 2000,
-          position: 'bottom',
-          color: 'danger'
-        });
-        toast.present();
+      (error) => {
+        console.error('Error al obtener el QR disponible', error);
+        this.mostrarError('Error al verificar el código QR');
       }
     );
+  }
+
+  async mostrarError(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'bottom',
+      color: 'danger'
+    });
+    toast.present();
   }
 }
