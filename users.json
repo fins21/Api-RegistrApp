@@ -1,14 +1,1 @@
-[
-  {
-    "nombre": "ola",
-    "email": "ola@ola",
-    "password": "Ola12345",
-    "role": "profesor"
-  },
-  {
-    "nombre": "Benja",
-    "email": "Benja@duocuc.cl",
-    "password": "Benja1234",
-    "role": "alumno"
-  }
-]
+[]

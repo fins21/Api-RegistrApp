@@ -151,7 +151,7 @@ export class ProfeHomePage implements OnInit {
   generarCodigoQR() {
     const timestamp = new Date().getTime();
     const randomString = Math.random().toString(36).substring(1, 5);
-    this.qrData = `${this.claseSeleccionada}|${this.seccionSeleccionada}|${timestamp}|${randomString}`;
+    this.qrData = `${this.claseSeleccionada}|${this.seccionSeleccionada}|${randomString}`;
     this.qrGenerado = true;
 
     // Notificar al servidor que se ha generado un nuevo código QR

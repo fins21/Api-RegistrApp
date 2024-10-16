@@ -64,6 +64,53 @@ function readClases() {
     }
 }
 
+function obtenerUsuarioPorEmail(email) {
+    const users = readUsers();
+    return users.find(user => user.email === email);
+}
+
+function actualizarUsuario(updatedUser) {
+    const users = readUsers();
+    const index = users.findIndex(user => user.email === updatedUser.email);
+    if (index !== -1) {
+        users[index] = updatedUser;
+        writeUsers(users);
+        return true;
+    }
+    return false;
+}
+
+app.get('/users', (req, res) => {
+    const { email } = req.query;
+    if (email) {
+        const user = obtenerUsuarioPorEmail(email);
+        if (user) {
+            res.json([user]);
+        } else {
+            res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+    } else {
+        const users = readUsers();
+        res.json(users);
+    }
+});
+
+app.put('/users/:email', (req, res) => {
+    const { email } = req.params;
+    const updatedUser = req.body;
+    
+    if (email !== updatedUser.email) {
+        return res.status(400).json({ message: 'El email en la URL no coincide con el email en el cuerpo de la solicitud' });
+    }
+
+    const success = actualizarUsuario(updatedUser);
+    if (success) {
+        res.json({ message: 'Usuario actualizado exitosamente' });
+    } else {
+        res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+});
+
 app.post('/register', (req, res) => {
     const { nombre, email, password, role } = req.body;
     const users = readUsers();
@@ -77,11 +124,6 @@ app.post('/register', (req, res) => {
     writeUsers(users);
 
     res.status(201).json({ message: 'User registered successfully' });
-});
-
-app.get('/users', (req, res) => {
-    const users = readUsers();
-    res.json(users);
 });
 
 app.post('/login', (req, res) => {
@@ -101,12 +143,10 @@ app.post('/asistencia', (req, res) => {
     console.log('Datos recibidos:', { nombre, correo, fechaHora, clase, seccion, qrData });
     console.log('QR actual:', qrActual);
 
-    // Verificar si el QR escaneado coincide con el QR actual
     if (qrData !== qrActual.qrData) {
         return res.status(400).json({ message: 'Código QR no válido o expirado' });
     }
 
-    // Verificar si la clase y sección coinciden con el QR actual
     if (clase !== qrActual.clase || seccion !== qrActual.seccion) {
         return res.status(400).json({ message: 'Clase o sección no válidas' });
     }
@@ -132,10 +172,9 @@ app.post('/qr-generado', (req, res) => {
 });
 
 app.get('/qr-disponible', (req, res) => {
-    qrActual = readQR(); // Actualizar qrActual desde el archivo
+    qrActual = readQR();
     res.json({ disponible: !!qrActual.qrData, qrData: qrActual.qrData });
 });
-
 
 app.get('/asistencias', (req, res) => {
     const asistencias = readAsistencias();
@@ -150,7 +189,6 @@ app.get('/clases', (req, res) => {
         res.json(clases);
     }
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
