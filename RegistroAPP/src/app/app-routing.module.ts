@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'start-ani',
     loadChildren: () => import('./start-ani/start-ani.module').then( m => m.StartAniPageModule)
   },
+  {
+    path: 'list-asis',
+    loadChildren: () => import('./list-asis/list-asis.module').then( m => m.ListAsisPageModule)
+  },
 ];
 
 @NgModule({

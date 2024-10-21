@@ -75,6 +75,10 @@ export class ProfeHomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  olawe() {
+    this.router.navigate(['/list-asis']);
+  }
+
   cargarClases() {
     this.http.get<Clase[]>(`${this.apiUrl}/clases`).subscribe(
       (clases) => {
@@ -166,7 +170,7 @@ export class ProfeHomePage implements OnInit {
           message: 'Nuevo código QR generado y activado',
           duration: 2000,
           position: 'bottom',
-          color: 'success'
+          color: 'warning'
         });
         toast.present();
       },
@@ -176,7 +180,7 @@ export class ProfeHomePage implements OnInit {
           message: 'Error al generar el código QR',
           duration: 2000,
           position: 'bottom',
-          color: 'danger'
+          color: 'warning'
         });
         toast.present();
       }

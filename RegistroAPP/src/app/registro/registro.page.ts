@@ -66,7 +66,7 @@ export class RegistroPage implements OnInit {
             message: 'Registro exitoso. Por favor, inicia sesión.',
             duration: 2000,
             position: 'bottom',
-            color: 'success'
+            color: 'warning'
           });
           toast.present();
           this.router.navigate(['/login']);
@@ -76,7 +76,7 @@ export class RegistroPage implements OnInit {
             message: error.error.message || 'Error en el registro. Intente nuevamente.',
             duration: 2000,
             position: 'bottom',
-            color: 'danger'
+            color: 'warning'
           });
           toast.present();
         }

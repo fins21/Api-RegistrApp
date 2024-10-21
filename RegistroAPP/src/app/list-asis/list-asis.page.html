@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>profesor {{nombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+<ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Lista de asistencia</ion-card-title>
+    </ion-card-header>
+
+  <ion-card-content>
+    <ion-card *ngFor="let claseSeccion of getAsistenciasPorClase() | keyvalue">
+      <ion-card-header>
+        <ion-card-title>{{ claseSeccion.key.split('_')[0] }}  {{ claseSeccion.key.split('_')[1] }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <br>
+        <ion-list>
+          <ion-item *ngFor="let asistencia of claseSeccion.value">
+            <ion-label>
+              <h2>{{ asistencia.nombre }}</h2>
+              <p>{{ asistencia.correo }}</p>
+              <p>{{ asistencia.fechaHora }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-card-content>
+</ion-card>
+
+<ion-button expand="block" (click)="clearAsistencias()" class="ion-margin-top" color="danger">
+  Borrar todas las asistencias
+</ion-button>
+
+<ion-button expand="block" (click)="yawe()" class="ion-margin-top">Volver</ion-button>

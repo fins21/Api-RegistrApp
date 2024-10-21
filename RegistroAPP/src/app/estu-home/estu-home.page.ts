@@ -91,7 +91,7 @@ export class EstuHomePage implements OnInit {
                 message: response.message || 'Asistencia registrada con éxito',
                 duration: 2000,
                 position: 'bottom',
-                color: 'success'
+                color: 'warning'
               });
               toast.present();
             },
@@ -120,7 +120,7 @@ export class EstuHomePage implements OnInit {
       message: mensaje,
       duration: 2000,
       position: 'bottom',
-      color: 'danger'
+      color: 'warning'
     });
     toast.present();
   }

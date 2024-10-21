@@ -23,29 +23,9 @@
     <qrcode [qrdata]="qrData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
   </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Asistencias Registradas</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-card *ngFor="let claseSeccion of getAsistenciasPorClase() | keyvalue">
-        <ion-card-header>
-          <ion-card-title>{{ claseSeccion.key.split('_')[0] }} - {{ claseSeccion.key.split('_')[1] }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-list>
-            <ion-item *ngFor="let asistencia of claseSeccion.value">
-              <ion-label>
-                <h2>{{ asistencia.nombre }}</h2>
-                <p>{{ asistencia.correo }}</p>
-                <p>{{ asistencia.fechaHora }}</p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </ion-card-content>
-  </ion-card>
+  <ion-button expand="block" (click)="olawe()" class="ion-margin-top">Ver Asistencia</ion-button>
+
+ 
 
   <ion-button expand="block" (click)="logout()" class="ion-margin-top">Cerrar Sesión</ion-button>
 </ion-content>

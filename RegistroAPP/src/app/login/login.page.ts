@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
             message: 'Credenciales incorrectas',
             duration: 2000,
             position: 'bottom',
-            color: 'danger'
+            color: 'Warning'
           });
           toast.present();
         }
@@ -73,4 +73,6 @@ export class LoginPage implements OnInit {
   goToResetPassword() {
     this.router.navigate(['/rpass']);
   }
+
+  
 }

@@ -116,14 +116,14 @@ app.post('/register', (req, res) => {
     const users = readUsers();
 
     if (users.find(user => user.email === email)) {
-        return res.status(400).json({ message: 'User with this email already exists' });
+        return res.status(400).json({ message: 'Este correo ya a sido usado' });
     }
 
     const newUser = { nombre, email, password, role };
     users.push(newUser);
     writeUsers(users);
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'Usuario Registrado con exito' });
 });
 
 app.post('/login', (req, res) => {
@@ -134,9 +134,21 @@ app.post('/login', (req, res) => {
     if (user) {
         res.json({ token: 'fake-jwt-token', user: { nombre: user.nombre, email: user.email, role: user.role } });
     } else {
-        res.status(401).json({ message: 'Invalid credentials' });
+        res.status(401).json({ message: 'Credenciales invalidas' });
     }
 });
+
+
+app.delete('/clear-asistencias', (req, res) => {
+    try {
+        writeAsistencias([]);
+        res.status(200).json({ message: 'Asistencia borrada con exito' });
+    } catch (error) {
+        console.error('Error al borrar asistencia:', error);
+        res.status(500).json({ message: 'Error al borrar asistencia' });
+    }
+});
+
 
 app.post('/asistencia', (req, res) => {
     const { nombre, correo, fechaHora, clase, seccion, qrData } = req.body;
